@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Image from 'next/image';
-import Cart from '../app/cart/page';
 import Link from 'next/link';
+import Cart from '../app/cart/page';
 
 interface ProductProps {
     _id: number;
@@ -23,7 +23,7 @@ interface Props {
 }
 
 function Products({ products }: Props) {
-    const [cart, setCart] = useState<ProductProps[]>([]);
+    const [cart, setCart] = useState<ProductProps[]>([]);  // Ensure cart is correctly typed
     const [showCart, setShowCart] = useState(false);
 
     const addToCart = (product: ProductProps) => {
@@ -47,11 +47,11 @@ function Products({ products }: Props) {
     return (
         <div>
             {/* Navbar */}
-            <div className='fixed w-full top-0 left-0 '>
-            <Navbar
-                cartCount={cart.reduce((count, item) => count + item.quantity, 0)}
-                toggleCart={() => setShowCart(!showCart)}
-            />
+            <div className='fixed w-full top-0 left-0'>
+                <Navbar
+                    cartCount={cart.reduce((count, item) => count + item.quantity, 0)}
+                    toggleCart={() => setShowCart(!showCart)}
+                />
             </div>
 
             {/* Cart */}
@@ -63,7 +63,6 @@ function Products({ products }: Props) {
                     <div
                         key={product._id}
                         className='border border-gray-300 hover:border-gray-600 duration-300 rounded-md'>
-
                         <div>
                             <Image src={product.image} alt="product image" width={250} height={250} />
                         </div>
@@ -84,10 +83,8 @@ function Products({ products }: Props) {
                                     className='bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600'>
                                     Add to cart
                                 </button>
-                                <Link href={{ pathname: "/singleProduct", query: { _id: product._id } }}>
-                                    <button className='uppercase hover:text-blue-600 duration-200'>
-                                        Details
-                                    </button>
+                                <Link href={`/singleProduct?_id=${product._id}`}>
+                                    <button className="uppercase hover:text-blue-600 duration-200">Details</button>
                                 </Link>
                             </div>
                         </div>

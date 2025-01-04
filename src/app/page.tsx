@@ -1,24 +1,30 @@
-import Products from "../components/Products"
-import Title from "../components/Title"
+import Products from "../components/Products";
+import Title from "../components/Title";
 
+// Fetch the data from the API
 const getData = async () => {
-  const res = await fetch(`https://jsonserver.reactbd.com/phone`)
+  const res = await fetch("https://jsonserver.reactbd.com/phone", {
+    cache: "no-store", // Ensure fresh data is fetched
+  });
 
-  //fecth the data
   if (!res.ok) {
-    throw new Error('Failed to fetch')
+    throw new Error("Failed to fetch");
   }
-  return res.json()
-}
+  return res.json();
+};
 
 export default async function Home() {
-
-  const product = await getData()
+  let products = [];
+  try {
+    products = await getData();
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
 
   return (
     <div>
-      <Title title="Get Your Favorite Phone"/>
-      <Products products={product}/>
+      <Title title="Get Your Favorite Phone" />
+      <Products products={products} />
     </div>
   );
 }
